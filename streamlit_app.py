@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import altair as alt
 
 st.title('🎈 Data Visualization for Accidents')
 st.write('Be safe!')
@@ -12,13 +13,26 @@ with st.expander('About this app'):
 st.subheader("What's the reason for UK accidents? Let's explore!")
 
 # Load data from a single CSV file
-@st.cache_data
 def load_data():
-    df = pd.read_csv("data/df_reduced.csv")
+    try:
+        df = pd.read_csv("data/df_reduced.csv")
+        if df.empty:
+            st.error("The CSV file is empty. Please check the file content.")
+            return None, None, None, None
+    except Exception as e:
+        st.error(f"Error loading data: {e}")
+        return None, None, None, None
     
     # Display the first few rows of the data and the unique values in the "Type" column
     st.write("Data Preview:", df.head())
     st.write("Unique 'Type' Values:", df['Type'].unique())
+    
+    # Ensure required columns exist
+    required_columns = ['Type', 'Hour', 'Period', 'Road_Surface_Conditions', 'Urban_or_Rural_Area', 'Accidents']
+    for col in required_columns:
+        if col not in df.columns:
+            st.error(f"Missing column: {col}. Please check your CSV file.")
+            return None, None, None, None
     
     # Split data into separate DataFrames based on column presence
     accident_by_hour = df[df['Type'].str.strip() == 'Hour']
@@ -30,9 +44,8 @@ def load_data():
 
 accident_by_hour, accident_by_period, road_surface_conditions, urban_rural = load_data()
 
-# Ensure data is loaded correctly
-if accident_by_hour.empty or accident_by_period.empty or road_surface_conditions.empty or urban_rural.empty:
-    st.error("One or more datasets are empty. Please check your CSV file and data filtering.")
+if accident_by_hour is None:
+    st.stop()  # Stops execution if data isn't loaded correctly
 
 # Show hour-wise accident data
 if not accident_by_hour.empty:
