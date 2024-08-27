@@ -3,22 +3,18 @@ import numpy as np
 import pandas as pd
 import altair as alt
 
-st.title('🎈 data visualiation for accidents')
+st.title('🎈 Data Visualization for Accidents')
+st.write('Be safe!')
+st.info('This is a visualization app.')
 
-st.write('be safe!')
-st.info('it is a visualation app')
+with st.expander('About this app'):
+    st.markdown('This app helps you predict and visualize accident data.')
+    st.info('Explore the dataset and gain insights about UK accidents.')
 
-with st.expander('about this app')
-st.markdown('about the app')
-st.info('helps you predicts and visualise the dataset')
-
-
-st.subheader('whats the reason for UK accidents lets explore')
-
-
+st.subheader("What's the reason for UK accidents? Let's explore!")
 
 # Load data from a single CSV file
-@st.cache
+@st.cache_data
 def load_data():
     df = pd.read_csv("data/summary.csv")
     
@@ -61,7 +57,7 @@ st.altair_chart(road_surface_chart)
 
 # Show accidents in urban vs. rural areas
 st.subheader("Accidents in Urban vs. Rural Areas")
-urban_rural_chart = alt.Chart(urban_rural).mark_pie().encode(
+urban_rural_chart = alt.Chart(urban_rural).mark_arc().encode(
     theta=alt.Theta(field='Accidents', type='quantitative'),
     color=alt.Color(field='Urban_or_Rural_Area', type='nominal'),
     tooltip=['Urban_or_Rural_Area:N', 'Accidents:Q']
