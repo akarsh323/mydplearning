@@ -20,7 +20,7 @@ st.subheader('whats the reason for UK accidents lets explore')
 # Load data from a single CSV file
 @st.cache
 def load_data():
-    df = pd.read_csv("summary.csv")
+    df = pd.read_csv("data/summary.csv")
     
     # Split data into separate DataFrames based on column presence
     accident_by_hour = df[df['Type'] == 'Hour']
