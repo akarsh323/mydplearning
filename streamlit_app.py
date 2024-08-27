@@ -15,7 +15,7 @@ st.subheader("What's the reason for UK accidents? Let's explore!")
 # Load data from a single CSV file
 def load_data():
     try:
-        df = pd.read_csv("data/df_reduced.csv")
+        df = pd.read_csv("data/summary.csv")
         if df.empty:
             st.error("The CSV file is empty. Please check the file content.")
             return None, None, None, None
