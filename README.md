@@ -7,7 +7,7 @@ Description of the app ...
 this is data visualisationapp
 ## Demo App
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://accidentvisual.streamlit.app/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://acidentvisual.streamlit.app/)
 
 ## GitHub Codespaces
 
