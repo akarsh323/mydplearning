@@ -14,7 +14,7 @@ st.subheader("What's the reason for UK accidents? Let's explore!")
 # Load data from a single CSV file
 @st.cache_data
 def load_data():
-    df = pd.read_csv("data/summary.csv")
+    df = pd.read_csv("data/df_reduced.csv")
     
     # Display the first few rows of the data and the unique values in the "Type" column
     st.write("Data Preview:", df.head())
