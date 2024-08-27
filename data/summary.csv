@@ -1,0 +1,34 @@
+Category,Accidents,Type,Accidents_By
+0,6488,Accidents by Hour,Hour
+1,4714,Accidents by Hour,Hour
+2,3778,Accidents by Hour,Hour
+3,3135,Accidents by Hour,Hour
+4,2634,Accidents by Hour,Hour
+5,3995,Accidents by Hour,Hour
+6,8666,Accidents by Hour,Hour
+7,20399,Accidents by Hour,Hour
+8,34305,Accidents by Hour,Hour
+9,23596,Accidents by Hour,Hour
+10,21421,Accidents by Hour,Hour
+11,24706,Accidents by Hour,Hour
+12,27693,Accidents by Hour,Hour
+13,27851,Accidents by Hour,Hour
+14,28192,Accidents by Hour,Hour
+15,36118,Accidents by Hour,Hour
+16,37895,Accidents by Hour,Hour
+17,42286,Accidents by Hour,Hour
+18,33032,Accidents by Hour,Hour
+19,23600,Accidents by Hour,Hour
+20,17165,Accidents by Hour,Hour
+21,13087,Accidents by Hour,Hour
+22,11322,Accidents by Hour,Hour
+23,8606,Accidents by Hour,Hour
+Day,333128,Accidents by Period,Period
+Night,131556,Accidents by Period,Period
+Dry,319370,Accidents by Road Surface Conditions,Road Surface
+Wet/Damp,132745,Accidents by Road Surface Conditions,Road Surface
+Frost/Ice,8140,Accidents by Road Surface Conditions,Road Surface
+Snow,2824,Accidents by Road Surface Conditions,Road Surface
+Flood (Over 3cm of water),863,Accidents by Road Surface Conditions,Road Surface
+1,307896,Accidents by Urban/Rural Area,Urban/Rural
+2,156801,Accidents by Urban/Rural Area,Urban/Rural
