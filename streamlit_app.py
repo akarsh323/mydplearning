@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import altair as alt
 
 st.title('🎈 Data Visualization for Accidents')
 st.write('Be safe!')
@@ -17,15 +16,15 @@ st.subheader("What's the reason for UK accidents? Let's explore!")
 def load_data():
     df = pd.read_csv("data/summary.csv")
     
-    # Check the data structure
+    # Display the first few rows of the data and the unique values in the "Type" column
     st.write("Data Preview:", df.head())
-    st.write("Data Types:", df.dtypes)
+    st.write("Unique 'Type' Values:", df['Type'].unique())
     
     # Split data into separate DataFrames based on column presence
-    accident_by_hour = df[df['Type'] == 'Hour']
-    accident_by_period = df[df['Type'] == 'Period']
-    road_surface_conditions = df[df['Type'] == 'Road_Surface']
-    urban_rural = df[df['Type'] == 'Urban_Rural']
+    accident_by_hour = df[df['Type'].str.strip() == 'Hour']
+    accident_by_period = df[df['Type'].str.strip() == 'Period']
+    road_surface_conditions = df[df['Type'].str.strip() == 'Road_Surface']
+    urban_rural = df[df['Type'].str.strip() == 'Urban_Rural']
     
     return accident_by_hour, accident_by_period, road_surface_conditions, urban_rural
 
@@ -38,6 +37,7 @@ if accident_by_hour.empty or accident_by_period.empty or road_surface_conditions
 # Show hour-wise accident data
 if not accident_by_hour.empty:
     st.subheader("Number of Accidents by Hour")
+    st.write(accident_by_hour.head())  # Display the data for debugging
     hour_chart = alt.Chart(accident_by_hour).mark_bar().encode(
         x=alt.X('Hour:O', title='Hour'),
         y=alt.Y('Accidents:Q', title='Number of Accidents'),
@@ -50,6 +50,7 @@ else:
 # Show day vs night accident data
 if not accident_by_period.empty:
     st.subheader("Number of Accidents: Day vs. Night")
+    st.write(accident_by_period.head())  # Display the data for debugging
     period_chart = alt.Chart(accident_by_period).mark_bar().encode(
         x=alt.X('Period:N', title='Period'),
         y=alt.Y('Accidents:Q', title='Number of Accidents'),
@@ -62,6 +63,7 @@ else:
 # Show road surface conditions
 if not road_surface_conditions.empty:
     st.subheader("Accidents by Road Surface Conditions")
+    st.write(road_surface_conditions.head())  # Display the data for debugging
     road_surface_chart = alt.Chart(road_surface_conditions).mark_bar().encode(
         x=alt.X('Road_Surface_Conditions:N', title='Road Surface Conditions', sort='-y'),
         y=alt.Y('Accidents:Q', title='Number of Accidents'),
@@ -74,6 +76,7 @@ else:
 # Show accidents in urban vs. rural areas
 if not urban_rural.empty:
     st.subheader("Accidents in Urban vs. Rural Areas")
+    st.write(urban_rural.head())  # Display the data for debugging
     urban_rural_chart = alt.Chart(urban_rural).mark_arc().encode(
         theta=alt.Theta(field='Accidents', type='quantitative'),
         color=alt.Color(field='Urban_or_Rural_Area', type='nominal'),
