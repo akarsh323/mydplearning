@@ -12,40 +12,39 @@ with st.expander('About this app'):
 
 st.subheader("What's the reason for UK accidents? Let's explore!")
 
-# Load data from a single CSV file
+# Load data from the provided URL
+@st.cache_data
 def load_data():
     try:
-        df = pd.read_csv("https://raw.githubusercontent.com/akarsh323/mydplearning/master/data/summary.csv")
-        if df.empty:
-            st.error("The CSV file is empty. Please check the file content.")
+        url = "https://raw.githubusercontent.com/akarsh323/mydplearning/master/data/df_reduced.csv"
+        df = pd.read_csv(url)
+        
+        # Display data preview and unique 'Type' values for debugging
+        st.write("Data Preview:", df.head())
+        st.write("Unique 'Type' Values:", df['Type'].unique())
+        
+        # Ensure required columns exist
+        required_columns = ['Type', 'Hour', 'Period', 'Road_Surface_Conditions', 'Urban_or_Rural_Area', 'Accidents']
+        missing_columns = [col for col in required_columns if col not in df.columns]
+        if missing_columns:
+            st.error(f"Missing columns: {', '.join(missing_columns)}. Please check your CSV file.")
             return None, None, None, None
+        
+        # Split data into separate DataFrames based on column presence
+        accident_by_hour = df[df['Type'].str.strip() == 'Hour']
+        accident_by_period = df[df['Type'].str.strip() == 'Period']
+        road_surface_conditions = df[df['Type'].str.strip() == 'Road_Surface']
+        urban_rural = df[df['Type'].str.strip() == 'Urban_Rural']
+        
+        return accident_by_hour, accident_by_period, road_surface_conditions, urban_rural
     except Exception as e:
         st.error(f"Error loading data: {e}")
         return None, None, None, None
-    
-    # Display the first few rows of the data and the unique values in the "Type" column
-    st.write("Data Preview:", df.head())
-    st.write("Unique 'Type' Values:", df['Type'].unique())
-    
-    # Ensure required columns exist
-    required_columns = ['Type', 'Hour', 'Period', 'Road_Surface_Conditions', 'Urban_or_Rural_Area', 'Accidents']
-    for col in required_columns:
-        if col not in df.columns:
-            st.error(f"Missing column: {col}. Please check your CSV file.")
-            return None, None, None, None
-    
-    # Split data into separate DataFrames based on column presence
-    accident_by_hour = df[df['Type'].str.strip() == 'Hour']
-    accident_by_period = df[df['Type'].str.strip() == 'Period']
-    road_surface_conditions = df[df['Type'].str.strip() == 'Road_Surface']
-    urban_rural = df[df['Type'].str.strip() == 'Urban_Rural']
-    
-    return accident_by_hour, accident_by_period, road_surface_conditions, urban_rural
 
 accident_by_hour, accident_by_period, road_surface_conditions, urban_rural = load_data()
 
 if accident_by_hour is None:
-    st.stop()  # Stops execution if data isn't loaded correctly
+    st.stop()  # Stop the app if data isn't loaded correctly
 
 # Show hour-wise accident data
 if not accident_by_hour.empty:
